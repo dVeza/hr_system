@@ -36,7 +36,12 @@ class Employee(TimeTracking):
         blank=True,
         on_delete=models.SET_NULL,
     )
-    salary = models.DecimalField(max_digits=10, decimal_places=2)
+    salary = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
     years_experience = models.IntegerField(
         null=True,
         blank=True,
