@@ -3,12 +3,15 @@
 
 ## Setup
 ```
-docker compose build .
+docker compose build
 docker compose run web python manage.py migrate
 docker compose run web python manage.py import_mock_data './MOCK_DATA.json'
+docker compose run web python manage.py createsuperuser --email admin@example.com --username admin
 docker compose up -d
 ```
-Then visit http://0.0.0.0:8000/ and enjoy the browsable api
+
+Then visit http://0.0.0.0:8000/ 
+Use the above created superuser to login and enjoy the browsable api
 
 ## Structure
 
@@ -24,3 +27,5 @@ Endpoint |HTTP Method | CRUD Method | Result
 `industries`| POST | CREATE | Create a new industry
 `industries/:id` | PUT | UPDATE | Update an industry
 `industries/:id` | DELETE | DELETE | Delete an industry
+`stats/` | GET | READ | Stats by industry with get params
+`stats2/` | GET | READ | Stats by industry
