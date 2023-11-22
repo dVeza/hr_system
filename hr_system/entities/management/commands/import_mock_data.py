@@ -1,12 +1,12 @@
 import json
 from datetime import datetime
 
-from django.utils.text import slugify
 from django.core.management.base import BaseCommand, CommandError
-from hr_system.entities.models import Employee, Industry, GENDER_CHOICES
+from django.utils.text import slugify
 
+from hr_system.entities.models import GENDER_CHOICES, Employee, Industry
 
-NOT_SET = 'n/a'
+NOT_SET = "n/a"
 
 
 class Command(BaseCommand):
@@ -16,9 +16,9 @@ class Command(BaseCommand):
         parser.add_argument("file_path", type=str)
 
     def handle(self, *args, **options):
-        path = options['file_path']
+        path = options["file_path"]
 
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             data = json.loads(f.read())
             for entry in data:
                 self.process(entry)
@@ -35,32 +35,30 @@ class Command(BaseCommand):
             print(f"Saved industry {industry}")
         return industry
 
-
     def process(self, entry):
-        if Employee.objects.filter(id=entry['id']).exists():
+        if Employee.objects.filter(id=entry["id"]).exists():
             print(f"Employee with id {entry['id']} already exists, skipping.")
             return
 
-        if entry['industry']:
-            industry = self.process_industry(entry['industry'])
+        if entry["industry"]:
+            industry = self.process_industry(entry["industry"])
         else:
             industry = None
-        
-        if entry['date_of_birth']:
-            dob = datetime.strptime(entry['date_of_birth'], '%d/%m/%Y')
+
+        if entry["date_of_birth"]:
+            dob = datetime.strptime(entry["date_of_birth"], "%d/%m/%Y")
         else:
             dob = None
 
         employee = Employee.objects.create(
-            id=entry['id'],
-            first_name=entry['first_name'],
-            last_name=entry['last_name'],
-            email=entry['email'],
-            gender=entry['gender'],
+            id=entry["id"],
+            first_name=entry["first_name"],
+            last_name=entry["last_name"],
+            email=entry["email"],
+            gender=entry["gender"],
             date_of_birth=dob,
             industry=industry,
-            salary=entry['salary'],
-            years_experience=entry['years_of_experience'],
+            salary=entry["salary"],
+            years_experience=entry["years_of_experience"],
         )
-        print(f'created {employee}')
-        
+        print(f"created {employee}")

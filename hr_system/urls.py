@@ -1,30 +1,15 @@
-"""
-URL configuration for hr_system project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import include, path
 from rest_framework import routers
+
 from hr_system.api import views
 
 router = routers.DefaultRouter()
-router.register(r'employees', views.EmployeeViewSet)
-router.register(r'industries', views.IndustryViewSet)
+router.register(r"employees", views.EmployeeViewSet, basename="employee")
+router.register(r"industries", views.IndustryViewSet, basename="industry")
+router.register(r"stats", views.StatsViewSet, basename="stats")
+router.register(r"stats2", views.StatsViewSetV2, basename="stats2")
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path("", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]

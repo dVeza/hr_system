@@ -1,10 +1,10 @@
 import uuid
+
 from django.db import models
 
-
 GENDER_CHOICES = (
-    ('M', 'Male'),
-    ('F', 'Female'),
+    ("M", "Male"),
+    ("F", "Female"),
 )
 
 
@@ -31,7 +31,7 @@ class Employee(TimeTracking):
     date_of_birth = models.DateField()
     industry = models.ForeignKey(
         "Industry",
-        related_name='employees',
+        related_name="employees",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -48,14 +48,10 @@ class Employee(TimeTracking):
     )
 
     class Meta:
-        ordering = ['-id']
+        ordering = ["-id"]
 
 
 class Industry(TimeTracking):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
-    slug = models.SlugField(
-        unique=True,
-        db_index=True,
-        max_length=255
-    )
+    slug = models.SlugField(unique=True, db_index=True, max_length=255)
